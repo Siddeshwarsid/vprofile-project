@@ -21,17 +21,6 @@ pipeline {
                 git branch: 'paac', url: 'https://github.com/Siddeshwarsid/vprofile-project.git'
             }
         }
-        stage('BUILD'){
-            steps {
-                sh 'mvn clean install -DskipTests'
-            }
-            post {
-                success {
-                    echo 'Now Archiving...'
-                    archiveArtifacts artifacts: '**/target/*.war'
-                }
-            }
-        }
 
         stage('UNIT TEST'){
             steps {
@@ -116,6 +105,19 @@ pipeline {
 //                 }
 //             }
 //         }
+	    
+        stage('BUILD'){
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
+            post {
+                success {
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war'
+                }
+            }
+        }
+
 	    
      stage('deploy to tomcat') {
        steps {
